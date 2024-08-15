@@ -1,9 +1,9 @@
 {
   "scripts": {
     "build": "webpack --config td_list.config.js",
-    "watch": "webpack --watch",
-    "start": "webpack serve --open"
-  },
+    "watch": "webpack --watch --config td_list.config.js",
+    "start": "webpack serve --config td_list.config.js --open"
+},
   "devDependencies": {
     "css-loader": "^7.1.2",
     "html-webpack-plugin": "^5.6.0",
