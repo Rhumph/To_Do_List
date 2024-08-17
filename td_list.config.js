@@ -3,11 +3,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     mode: 'development',
-    entry: { main: './src/index.js' },
+    entry: { 
+        main: './src/index.js', 
+        DOM_managment: './src/DOM_management.js',
+        content: './src/content.js'
+     },
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist'),
-        clean: true,
+        // clean: true,
     },
     devtool: 'inline-source-map',
     devServer: {

@@ -3,7 +3,7 @@
     "build": "webpack --config td_list.config.js",
     "watch": "webpack --watch --config td_list.config.js",
     "start": "webpack serve --config td_list.config.js --open"
-},
+  },
   "devDependencies": {
     "css-loader": "^7.1.2",
     "html-webpack-plugin": "^5.6.0",
@@ -11,5 +11,9 @@
     "webpack": "^5.93.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.0.4"
+  },
+  "dependencies": {
+    "date-fns": "^3.6.0",
+    "moment": "^2.30.1"
   }
 }

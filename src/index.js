@@ -1,12 +1,72 @@
-// You have set up webpack now you need to make this thing
+import './style.css'
+import { compareAsc, format } from "date-fns";
 
-const contentDiv = document.getElementById('content');
+// format(new Date(1, 11, 2011), "dd-MM-yyyy");
 
-// Create a new paragraph element
-const newParagraph = document.createElement('p');
+console.log('printed abcdefg')
 
-// Set the text content of the paragraph to "Test work"
-newParagraph.textContent = 'Test work i3rnvbi3rbvn3irncvb3i';
+// const contentDiv = document.getElementById('main-content');
+// const newParagraph = document.createElement('p');
+// newParagraph.textContent = 'Test work i3rnvbi3rbvn3irncvb3i';
+// contentDiv.appendChild(newParagraph);
 
-// Append the new paragraph to the content div
-contentDiv.appendChild(newParagraph);
+export class Project { 
+
+    constructor(title, description, dueDate, priority, project_items, completed_status){
+        this.title = title
+        this.description = description
+        this.dueDate = new Date (dueDate)
+        this.priority = priority
+        this.project_items = project_items
+        this.completed_status = completed_status
+        this.projectTicketArray = []
+    }
+
+    change_priority(new_priority_level){ 
+        this.priority = new_priority_level
+    }
+
+    change_dateDue(newDueDate){ 
+        this.dateDue = newDueDate
+    }
+
+    change_completedStatus(newCompletionStatus){ 
+        this.completed_status = newCompletionStatus
+    }
+
+    amend_Description(amendedDescription){ 
+        this.description = amendedDescription        
+    }
+
+    add_project_ticket(newTicket){ 
+        this.projectTicketArray.push(newTicket)
+    }
+
+}
+
+export class to_do_ticket { 
+
+    constructor(title, notes, dateDue, priority, completedStatus){
+        this.title = title
+        this.notes = notes
+        this.dateDue = dateDue
+        this.priority = priority
+        this.completed_status = completedStatus
+    }
+
+    change_priority(){ 
+
+    }
+
+    change_dateDue(){ 
+
+    }
+
+    change_completedStatus(){ 
+
+    }
+
+    amend_notes(){ 
+
+    }
+}
