@@ -24,6 +24,25 @@ function print_project_cards(){
         topRow.classList.add('card-top-row')
         projectCard.appendChild(topRow)
 
+        const bottomRow = document.createElement('div')
+        bottomRow.classList.add('card-bottom-row')
+        projectCard.appendChild(bottomRow)
+
+        const bottomRowLeft = document.createElement('div')
+        bottomRowLeft.classList.add('bottom-row-left')
+        bottomRow.appendChild(bottomRowLeft)
+
+        const bottomRowRight = document.createElement('div')
+        bottomRowRight.classList.add('bottom-row-right')
+        bottomRow.appendChild(bottomRowRight)
+
+        const description = document.createElement('p')
+        description.textContent = project.description
+        description.classList.add('description-box')
+        bottomRowLeft.appendChild(description)
+
+        // const 
+
         const topRowLeft = document.createElement('div')
         topRowLeft.classList.add('top-left')
         topRow.appendChild(topRowLeft)
@@ -45,6 +64,8 @@ function print_project_cards(){
         priority_level.textContent = project.priority
         priority_level.classList.add('top-right-item')
         topRowRight.appendChild(priority_level)
+
+
 
         contentDiv.appendChild(projectCard);
     });
