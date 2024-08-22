@@ -41,7 +41,21 @@ function print_project_cards(){
         description.classList.add('description-box')
         bottomRowLeft.appendChild(description)
 
-        // const 
+        const ticketNumberBox = document.createElement('div')
+        ticketNumberBox.textContent = "No.of Tickets"
+        ticketNumberBox.classList.add('ticket-number-box')
+        bottomRowRight.appendChild(ticketNumberBox)
+
+        const completedStatus = document.createElement('div')
+        completedStatus.textContent = project.completed_status
+        completedStatus.classList.add('completed-status')
+        bottomRowRight.appendChild(completedStatus)
+
+        const ticket_numbers = document.createElement('h3')
+        ticket_numbers.textContent = project.project_items.length
+        ticket_numbers.classList.add('ticket-numbers')
+        ticketNumberBox.appendChild(ticket_numbers)
+
 
         const topRowLeft = document.createElement('div')
         topRowLeft.classList.add('top-left')
