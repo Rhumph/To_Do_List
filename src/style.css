@@ -102,9 +102,9 @@ width: 20px; */
 }
 
 .bottom-row-right{ 
-    /* background-color: grey;
-    height: 30px;
-    width: 20px; */
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
 }
 
 .description-box{ 
@@ -132,6 +132,36 @@ width: 20px; */
 .top-right-item{
     font-size: 20px;
     font-weight: bold;
+}
+
+.project-content{ 
+    height: 100%;
+    width: 100%;
+    background-color: azure;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+}
+
+.projects-btn { 
+    background-color: burlywood;
+}
+
+.projects-btn-return{ 
+    background-color: lightcoral;
+}
+
+.project-description{
+    grid-column: 1/1;
+}
+
+.tickets-container{ 
+    grid-column: 1/1;
+}
+
+.add-form{ 
+    background-color: darkslateblue;
+    grid-column: 2/1;
+    grid-row: 2/1;
 }
 
 ::-webkit-scrollbar {

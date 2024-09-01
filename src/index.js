@@ -12,7 +12,7 @@ console.log('printed abcdefg')
 
 export class Project { 
 
-    constructor(title, description, dueDate, priority, project_items, completed_status){
+    constructor(title, description, dueDate, priority, project_items, completed_status, index){
         this.title = title
         this.description = description
         this.dueDate = new Date (dueDate)
@@ -20,6 +20,7 @@ export class Project {
         this.project_items = project_items
         this.completed_status = completed_status
         this.projectTicketArray = []
+        this.index = index
     }
 
     change_priority(new_priority_level){ 
