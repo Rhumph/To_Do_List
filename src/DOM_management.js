@@ -1,6 +1,6 @@
 import { projects_array } from './content.js'
 import moment from 'moment';
-import { to_do_ticket } from './index.js';
+import { Project, to_do_ticket } from './index.js';
 
 console.log('printed njnj')
 const contentDiv = document.getElementById('main-content');
@@ -32,13 +32,13 @@ contentDiv.addEventListener('click', function (event) {
 contentDiv.addEventListener('click', function (event) {
 
     const addTicketBtn = event.target.closest('.projects-btn')
-    const detailedTile = document.getElementsByClassName('.project-index')
+    const proindex = document.getElementById('invis-index').textContent
+    console.log(proindex)
 
     if (addTicketBtn) {
 
         // const projectIndexElement = detailedTile.querySelector('.project-index');
-        const projectIndex = detailedTile.textContent;
-        addTicketForm(projectIndex)
+        addTicketForm(proindex)
     }
 }
 )
@@ -137,6 +137,7 @@ function showProject(projectIndex) {
 
     const projectContent = document.createElement('div');
     projectContent.classList.add('project-content');
+    projectContent.id = "project-content"
     contentDiv.appendChild(projectContent);
 
     const projectTitle = document.createElement('h2');
@@ -174,10 +175,11 @@ function showProject(projectIndex) {
 
     const invisibleIndex = document.createElement('div');
     invisibleIndex.classList.add('project-index');
+    invisibleIndex.id = 'invis-index'
     invisibleIndex.style.display = 'none';
     invisibleIndex.textContent = projectIndex;
     detailTile.appendChild(invisibleIndex);
-    console.log(invisibleIndex.textContent)
+    // console.log(invisibleIndex.textContent)
 
     const ticketsContainer = document.createElement('div');
     ticketsContainer.classList.add('tickets-container');
@@ -215,21 +217,21 @@ function clearMainContent() {
     contentDiv.innerHTML = ''
 }
 
-function addTicketToProjectArray(projectIndex, title, notes, dateDue, priority, completedstat) {
+function addTicketToProjectItems(projectIndex, title, notes, dateDue, priority, completedstat) {
     const specifiedProject = projects_array[projectIndex];
 
     const newTicket = new to_do_ticket(title, notes, dateDue, priority, completedstat)
 
-    specifiedProject.projectTicketArray.push(newticket)
+    specifiedProject.project_items.push(newTicket)
 }
 
-function addTicketForm(projectIndex) {
+function addTicketForm(projectIndexA) {
 
-    const projectContent = document.getElementsByClassName(".project-content")
+    const projectContent = document.getElementById("project-content")
 
     const addForm = document.createElement('form');
     addForm.classList.add('add-form');
-    projectContent.appendChild(addForm);
+    projectContent.append(addForm);
 
     // Create input for Title
     const titleInput = document.createElement('input');
@@ -301,13 +303,23 @@ function addTicketForm(projectIndex) {
         const completedstat = completedStatSelect.value;
 
         // Example project index (you would replace this with actual logic to get the correct index)
-        const projectIndex = projectIndex // Change this to the actual project index where the ticket should be added
+        const projectIndexB = projectIndexA // Change this to the actual project index where the ticket should be added
 
         // Call the function to add the ticket to the project array
-        addTicketToProjectArray(projectIndex, title, notes, dateDue, priority, completedstat);
+        
 
         // Clear form fields after submission
         addForm.reset();
+
+        addTicketToProjectItems(projectIndexB, title, notes, dateDue, priority, completedstat);
+        showProject(projectIndexB)
+
+        // console.log(project_items[projectIndexB])
     });
+}
+
+function addProject(title, description, dueDate, priority, project_items, completed_status, index){ 
+    const newProject = new Project (title, description, dueDate, priority, project_items, completed_status, index)
+    projects_array.push(newProject)
 }
 
