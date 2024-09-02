@@ -151,6 +151,14 @@ width: 20px; */
     background-color: lightcoral;
 }
 
+.add-project-btn{ 
+    background-color: skyblue;
+}
+
+.project-form{ 
+    background-color: cornsilk;
+}
+
 .project-description{
     grid-column: 1/1;
 }

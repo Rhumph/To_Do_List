@@ -3,7 +3,7 @@ import { compareAsc, format } from "date-fns";
 
 // format(new Date(1, 11, 2011), "dd-MM-yyyy");
 
-console.log('printed abcdefg')
+
 
 // const contentDiv = document.getElementById('main-content');
 // const newParagraph = document.createElement('p');

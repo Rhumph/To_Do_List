@@ -1,7 +1,5 @@
 import { Project, to_do_ticket } from './index.js'
 
-console.log('printed 12345')
-
 // main_content = document.getElementById('main-content')
 // document.addEventListener('DOMContentLoaded', () => { })
 

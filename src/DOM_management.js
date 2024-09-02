@@ -2,49 +2,164 @@ import { projects_array } from './content.js'
 import moment from 'moment';
 import { Project, to_do_ticket } from './index.js';
 
-console.log('printed njnj')
+
 const contentDiv = document.getElementById('main-content');
 
 document.addEventListener('DOMContentLoaded', () => {
     print_project_cards();
 });
 
-document.addEventListener('click', function (event) {
-    const projectButton = event.target.closest('.projects-btn-return')
-    if (projectButton) {
-        clearMainContent()
-        print_project_cards()
-    }
-})
+// function addProject(title, description, dueDate, priority, project_items, completed_status, index){ 
+//     const newProject = new Project (title, description, dueDate, priority, project_items, completed_status, index)
+//     projects_array.push(newProject)
+// }
 
-contentDiv.addEventListener('click', function (event) {
-    // Use closest to ensure the target is a project-card or its descendant
-    const projectCard = event.target.closest('.project-card');
-    if (projectCard) {
-        const projectIndexElement = projectCard.querySelector('.project-index');
-        const projectIndex = projectIndexElement.textContent;
-        console.log(projectIndex);
-        showProject(projectIndex);
-
-    }
-});
-
-contentDiv.addEventListener('click', function (event) {
-
-    const addTicketBtn = event.target.closest('.projects-btn')
-    const proindex = document.getElementById('invis-index').textContent
-    console.log(proindex)
-
-    if (addTicketBtn) {
-
-        // const projectIndexElement = detailedTile.querySelector('.project-index');
-        addTicketForm(proindex)
-    }
+function addProject(newProject){ 
+    // const newProject = new Project (title, description, dueDate, priority, project_items, completed_status, index)
+    projects_array.push(newProject)
+    console.log(projects_array)
 }
-)
 
+function addProjectForm() { 
+    clearMainContent();
+    
+    const newProForm = document.createElement('form');
+    newProForm.classList.add('project-form');
+    contentDiv.appendChild(newProForm);
+
+    // Title
+    const titleInput = document.createElement('input');
+    titleInput.type = 'text';
+    titleInput.name = 'title';
+    titleInput.placeholder = 'Project Title';
+    titleInput.required = true;
+    newProForm.appendChild(titleInput);
+
+    // Description
+    const descriptionInput = document.createElement('input');
+    descriptionInput.type = 'text';
+    descriptionInput.name = 'description';
+    descriptionInput.placeholder = 'Project Description';
+    descriptionInput.required = true;
+    newProForm.appendChild(descriptionInput);
+
+    // Due Date
+    const dueDateInput = document.createElement('input');
+    dueDateInput.type = 'date';
+    dueDateInput.name = 'dueDate';
+    dueDateInput.required = true;
+    newProForm.appendChild(dueDateInput);
+
+    // Priority
+    const prioritySelect = document.createElement('select');
+    prioritySelect.name = 'priority';
+    prioritySelect.required = true;
+
+    const priorityOptions = ['Low', 'Medium', 'High'];
+    priorityOptions.forEach(priority => {
+        const option = document.createElement('option');
+        option.value = priority.toLowerCase();
+        option.textContent = priority;
+        prioritySelect.appendChild(option);
+    });
+    newProForm.appendChild(prioritySelect);
+
+    // Project Items
+    // const itemsLabel = document.createElement('label');
+    // itemsLabel.textContent = 'Project Items:';
+    // newProForm.appendChild(itemsLabel);
+
+    // const itemsTextarea = document.createElement('textarea');
+    // itemsTextarea.name = 'projectItems';
+    // itemsTextarea.placeholder = 'Enter items, separated by commas';
+    // newProForm.appendChild(itemsTextarea);
+
+    // Completed Status
+    const completedStatusSelect = document.createElement('select');
+    completedStatusSelect.name = 'completedStatus';
+    completedStatusSelect.required = true;
+
+    const statusOptions = ['Not Started', 'In Progress', 'Completed'];
+    statusOptions.forEach(status => {
+        const option = document.createElement('option');
+        option.value = status.toLowerCase().replace(' ', '-');
+        option.textContent = status;
+        completedStatusSelect.appendChild(option);
+    });
+    newProForm.appendChild(completedStatusSelect);
+
+    // Index (Hidden Input)
+    const indexInput = document.createElement('input');
+    indexInput.type = 'hidden';
+    indexInput.name = 'index';
+    indexInput.value = projects_array.length + 1;
+    newProForm.appendChild(indexInput);
+
+    // Submit Button
+    const submitButton = document.createElement('button');
+    submitButton.type = 'submit';
+    submitButton.textContent = 'Add Project';
+    newProForm.appendChild(submitButton);
+
+    // Optional: Handle form submission
+    newProForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(newProForm);
+        const newProject = {
+            title: formData.get('title'),
+            description: formData.get('description'),
+            dueDate: formData.get('dueDate'),
+            priority: formData.get('priority'),
+            projectTicketArray: [],
+            project_items: [],
+            // projectItems: formData.get('projectItems').split(',').map(item => item.trim()),
+            completedStatus: formData.get('completedStatus'),
+            index: parseInt(formData.get('index'))
+        };
+
+        // Function to add project to your projects array or handle submission
+        addProject(newProject);
+        clearMainContent(); 
+        print_project_cards()
+    });
+}
 
 function print_project_cards() {
+
+    const content = document.getElementById('main-content')
+
+    const addProjectbtn = document.createElement('button')
+    addProjectbtn.classList.add('add-project-btn')
+    addProjectbtn.textContent = "Add New Project"
+    content.appendChild(addProjectbtn)
+
+    contentDiv.addEventListener('click', function (event) {
+
+        const addProjectBtn = event.target.closest('.add-project-btn')
+        // const proindex = document.getElementById('invis-index').textContent
+        // console.log(proindex)
+    
+        if (addProjectBtn) {
+    
+            // const projectIndexElement = detailedTile.querySelector('.project-index');
+            console.log('Add project Button Clicked')
+            addProjectForm()
+        }
+    }
+    )
+
+    contentDiv.addEventListener('click', function (event) {
+        // Use closest to ensure the target is a project-card or its descendant
+        const projectCard = event.target.closest('.project-card');
+        if (projectCard) {
+            const projectIndexElement = projectCard.querySelector('.project-index');
+            const projectIndex = projectIndexElement.textContent;
+            console.log(projectIndex);
+            showProject(projectIndex);
+    
+        }
+    });
+
     projects_array.forEach(project => {
         const projectCard = document.createElement('div')
         projectCard.classList.add('project-card');
@@ -82,7 +197,8 @@ function print_project_cards() {
         bottomRowRight.appendChild(completedStatus)
 
         const ticket_numbers = document.createElement('h3')
-        ticket_numbers.textContent = project.project_items.length
+        const tnumbers = project.project_items.length
+        ticket_numbers.textContent = tnumbers
         ticket_numbers.classList.add('ticket-numbers')
         ticketNumberBox.appendChild(ticket_numbers)
 
@@ -121,6 +237,28 @@ function print_project_cards() {
 
 function showProject(projectIndex) {
     clearMainContent();
+
+    contentDiv.addEventListener('click', function (event) {
+
+        const addTicketBtn = event.target.closest('.projects-btn')
+        const proindex = document.getElementById('project-index').textContent
+        console.log(proindex)
+    
+        if (addTicketBtn) {
+    
+            // const projectIndexElement = detailedTile.querySelector('.project-index');
+            addTicketForm(proindex)
+        }
+    }
+    )
+
+    document.addEventListener('click', function (event) {
+    const projectButton = event.target.closest('.projects-btn-return')
+    if (projectButton) {
+        clearMainContent()
+        print_project_cards()
+    }
+})
 
     // console.log(projectIndex + "heyhey")
     const highlightedProject = projects_array[projectIndex];
@@ -263,7 +401,7 @@ function addTicketForm(projectIndexA) {
     const priorities = ['Low', 'Medium', 'High'];
     priorities.forEach(priority => {
         const option = document.createElement('option');
-        option.value = priority.toLowerCase();
+        option.value = priority.toLowerCase()
         option.textContent = priority;
         prioritySelect.appendChild(option);
     });
@@ -318,8 +456,4 @@ function addTicketForm(projectIndexA) {
     });
 }
 
-function addProject(title, description, dueDate, priority, project_items, completed_status, index){ 
-    const newProject = new Project (title, description, dueDate, priority, project_items, completed_status, index)
-    projects_array.push(newProject)
-}
 
