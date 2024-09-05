@@ -9,20 +9,14 @@ document.addEventListener('DOMContentLoaded', () => {
     print_project_cards();
 });
 
-// function addProject(title, description, dueDate, priority, project_items, completed_status, index){ 
-//     const newProject = new Project (title, description, dueDate, priority, project_items, completed_status, index)
-//     projects_array.push(newProject)
-// }
-
-function addProject(newProject){ 
-    // const newProject = new Project (title, description, dueDate, priority, project_items, completed_status, index)
+function addProject(newProject) {
     projects_array.push(newProject)
     console.log(projects_array)
 }
 
-function addProjectForm() { 
+function addProjectForm() {
     clearMainContent();
-    
+
     const newProForm = document.createElement('form');
     newProForm.classList.add('project-form');
     contentDiv.appendChild(newProForm);
@@ -102,7 +96,7 @@ function addProjectForm() {
     newProForm.appendChild(submitButton);
 
     // Optional: Handle form submission
-    newProForm.addEventListener('submit', function(event) {
+    newProForm.addEventListener('submit', function (event) {
         event.preventDefault();
         const formData = new FormData(newProForm);
         const newProject = {
@@ -119,7 +113,7 @@ function addProjectForm() {
 
         // Function to add project to your projects array or handle submission
         addProject(newProject);
-        clearMainContent(); 
+        clearMainContent();
         print_project_cards()
     });
 }
@@ -138,9 +132,9 @@ function print_project_cards() {
         const addProjectBtn = event.target.closest('.add-project-btn')
         // const proindex = document.getElementById('invis-index').textContent
         // console.log(proindex)
-    
+
         if (addProjectBtn) {
-    
+
             // const projectIndexElement = detailedTile.querySelector('.project-index');
             console.log('Add project Button Clicked')
             addProjectForm()
@@ -156,7 +150,7 @@ function print_project_cards() {
             const projectIndex = projectIndexElement.textContent;
             console.log(projectIndex);
             showProject(projectIndex);
-    
+
         }
     });
 
@@ -241,11 +235,11 @@ function showProject(projectIndex) {
     contentDiv.addEventListener('click', function (event) {
 
         const addTicketBtn = event.target.closest('.projects-btn')
-        const proindex = document.getElementById('project-index').textContent
+        const proindex = document.getElementById('invis-index').textContent
         console.log(proindex)
-    
+
         if (addTicketBtn) {
-    
+
             // const projectIndexElement = detailedTile.querySelector('.project-index');
             addTicketForm(proindex)
         }
@@ -253,12 +247,33 @@ function showProject(projectIndex) {
     )
 
     document.addEventListener('click', function (event) {
-    const projectButton = event.target.closest('.projects-btn-return')
-    if (projectButton) {
-        clearMainContent()
-        print_project_cards()
-    }
-})
+        const projectButton = event.target.closest('.projects-btn-return')
+        if (projectButton) {
+            clearMainContent()
+            print_project_cards()
+        }
+    })
+
+    document.addEventListener('click', function (event) {
+        const delProjectBtn = event.target.closest('.delete-ticket-btn');
+    
+        if (delProjectBtn) {
+            // Find the closest ticket element containing the ticket-invis-index
+            const ticketElement = delProjectBtn.closest('.ticket');
+            
+            // Get the ticket index from the ticket element
+            const toDelTicketIndex = ticketElement.querySelector('.ticket-invis-index').textContent;
+    
+            // Get the project index from an element containing the project index (assuming it's somewhere in the DOM)
+            const subjectProjectIndex = document.getElementById('invis-index').textContent;
+    
+            console.log(subjectProjectIndex);
+            console.log(toDelTicketIndex);
+    
+            deleteTicket(toDelTicketIndex, subjectProjectIndex);
+            showProject(subjectProjectIndex);
+        }
+    });
 
     // console.log(projectIndex + "heyhey")
     const highlightedProject = projects_array[projectIndex];
@@ -324,8 +339,14 @@ function showProject(projectIndex) {
     projectContent.appendChild(ticketsContainer);
 
     highlightedProject.project_items.forEach((ticket, ticketIndex) => {
+
         const ticketElement = document.createElement('div');
         ticketElement.classList.add('ticket');
+
+        const deleteTicketBtn = document.createElement('button')
+        deleteTicketBtn.textContent = 'X'
+        deleteTicketBtn.classList.add('delete-ticket-btn')
+        ticketElement.appendChild(deleteTicketBtn)
 
         const ticketTitle = document.createElement('h4');
         ticketTitle.textContent = `Ticket ${ticketIndex + 1}: ${ticket.title}`;
@@ -336,7 +357,7 @@ function showProject(projectIndex) {
         ticketElement.appendChild(ticketDescription);
 
         const ticketDueDate = document.createElement('p');
-        ticketDueDate.textContent = `Due Date: ${ticket.dueDate}`;
+        ticketDueDate.textContent = `Due Date: ${ticket.dateDue}`;
         ticketElement.appendChild(ticketDueDate);
 
         const ticketPriority = document.createElement('p');
@@ -344,8 +365,14 @@ function showProject(projectIndex) {
         ticketElement.appendChild(ticketPriority);
 
         const ticketStatus = document.createElement('p');
-        ticketStatus.textContent = `Status: ${ticket.status}`;
+        ticketStatus.textContent = `Status: ${ticket.completed_status}`;
         ticketElement.appendChild(ticketStatus);
+
+        const ticketInvisIndex = document.createElement('div')
+        ticketInvisIndex.style.display = 'none'
+        ticketInvisIndex.classList.add('ticket-invis-index')
+        ticketInvisIndex.textContent = ticketIndex
+        ticketElement.appendChild(ticketInvisIndex)
 
         ticketsContainer.appendChild(ticketElement);
     });
@@ -444,7 +471,7 @@ function addTicketForm(projectIndexA) {
         const projectIndexB = projectIndexA // Change this to the actual project index where the ticket should be added
 
         // Call the function to add the ticket to the project array
-        
+
 
         // Clear form fields after submission
         addForm.reset();
@@ -456,4 +483,16 @@ function addTicketForm(projectIndexA) {
     });
 }
 
+function deleteTicket(ticketIndex, projectIndex) {
+    const parentProject = projects_array[projectIndex]
+    console.log(parentProject)
+    const projectTicketArray = parentProject.project_items
+    console.log(projectTicketArray)
+    projectTicketArray.splice(ticketIndex, 1)
 
+
+}
+
+
+// RECOMMENCE HERE
+// get that local storage working, then you're done, make it look pretty later.

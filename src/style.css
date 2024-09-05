@@ -153,10 +153,16 @@ width: 20px; */
 
 .add-project-btn{ 
     background-color: skyblue;
+    border-radius: 10px;
+    border-style:inset;
+    padding: 10px;
+    border-color: darkslateblue;
+    margin-bottom: 10px;
+    border-width: 3px;
 }
 
 .project-form{ 
-    background-color: cornsilk;
+    background-color: rgb(201, 184, 115);
 }
 
 .project-description{
